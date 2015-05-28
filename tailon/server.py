@@ -31,7 +31,7 @@ class Commands:
 
     # @todo: factor out common logic
     def awk(self, script, fn, stdout, stderr, **kw):
-        cmd = [self.awkexe, '--sandbox', script]
+        cmd = [self.awkexe, script]
         if fn:
             cmd.append(fn)
         p = Subprocess(cmd, stdout=stdout, stderr=stderr, **kw)
