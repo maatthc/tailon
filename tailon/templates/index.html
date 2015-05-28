@@ -36,7 +36,7 @@
         {# ----------------------------------- #}
         {% if files.keys() == {'__ungrouped__'} %}
           {% for fn in files['__ungrouped__'] %}
-          <option data-size="{{fn[1]}}" data-mtime="{{fn[2]}}" value="{{fn[0]}}">{{fn[0]}}</option>
+          <option data-size="{{fn[1]}}" data-mtime="{{fn[2]}}" value="{{fn[0]}}" selected>{{fn[0]}}</option>
           {% end %}
         {# ----------------------------------- #}
         {% else %}
@@ -44,7 +44,7 @@
           {% set group = group if group != '__ungrouped__' else 'ungrouped' %}
           <optgroup label="{{group}}">
             {% for fn in lst %}
-            <option data-size="{{fn[1]}}" data-mtime="{{fn[2]}}" value="{{fn[0]}}">{{fn[0]}}</option>
+            <option data-size="{{fn[1]}}" data-mtime="{{fn[2]}}" value="{{fn[0]}}" selected>{{fn[0]}}</option>
             {% end %}
           </optgroup>
           {% end %}

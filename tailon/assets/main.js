@@ -427,6 +427,10 @@ cmdmodel.on('change', function(model) {
   wscommand(model);
 });
 
+// By MaaT
+console.log("Initializing Log with the first log on the list...");
+var firstLog = document.getElementById('logselect').value;
+cmdmodel.set({ file: firstLog});
 
 //----------------------------------------------------------------------------
 // shortcuts:
