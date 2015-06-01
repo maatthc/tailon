@@ -49,7 +49,7 @@ function isInputFocused() {
 }
 
 function resizeLogview() {
-  var toolbarHeight = (uimodel.get('pannel-hidden') ? 0 : $('.toolbar').outerHeight(true)); // todo
+  var toolbarHeight = (uimodel.get('pannel-hidden') ? 0 : $('.toolbar').height()); // todo
   logviewer.container.height(window.innerHeight - toolbarHeight);
 }
 
@@ -89,12 +89,17 @@ var ModeSelectView = Backbone.View.extend({
     'change': 'modechange'
   },
 
-  modechange: function(event) {
-    this.model.set({'mode': event.target.value, 'script': null});
+  modechange: function (change) {
+    this.model.set({'mode': change.val, 'script': null});
   },
 
   render: function() {
-    this.$el.selectize();
+    this.$el.select2({
+      width: 'element',
+      allowClear: true,
+      containerCssClass: 'select-container',
+      dropdownCssClass: 'select-dropdown-container'
+    });
     return this;
   }
 });
@@ -106,17 +111,24 @@ var FileSelectView = Backbone.View.extend({
   },
 
   events: {
-    'change': 'filechange'
+    'change': 'filechange',
+    'add' : 'filechange'
   },
 
-  filechange: function(event) {
-    this.model.set({'file': event.target.value});
+  filechange: function(change) {
+    this.model.set({'file': change.val});
+    console.log("Setting file to: " + change.val);
   },
 
   render: function() {
-    this.$el.selectize({
-      highlight: false,
-      selectOnTab: true
+    this.$el.select2({
+      width: 'element',
+      placeholder: 'select file',
+      allowClear: true,
+      formatResult: formatFilename,
+      containerCssClass: 'select-container',
+      dropdownCssClass: 'select-dropdown-container',
+      dropdownAutoWidth: true
     });
     return this;
   }
@@ -414,8 +426,8 @@ socket.onmessage = onMessage;
 window.cmdmodel = new CommandModel();
 window.uimodel = new UiModel();
 
-window.fileselectview = new FileSelectView({model: cmdmodel, el: '#logselect  > select'});
-window.modeselectview = new ModeSelectView({model: cmdmodel, el: '#modeselect > select'});
+window.fileselectview = new FileSelectView({model: cmdmodel, el: '#logselect'});
+window.modeselectview = new ModeSelectView({model: cmdmodel, el: '#modeselect'});
 window.scriptview = new ScriptView({model: cmdmodel, el: '#scriptinput input'});
 window.actionsview = new ActionsView({model: uimodel, el: '.quickbar .button-group'});
 window.buttonsview = new PanelView({model: uimodel, cmdmodel: cmdmodel, el: '.toolbar'});
@@ -427,10 +439,16 @@ cmdmodel.on('change', function(model) {
   wscommand(model);
 });
 
-// By MaaT
-console.log("Initializing Log with the first log on the list...");
+console.log("Initializing Log ...");
 var firstLog = document.getElementById('logselect').value;
 cmdmodel.set({ file: firstLog});
+//----------------------------------------------------------------------------
+// visual effects
+$('.select2-choice').hover(
+  function () {$(this).find('.select2-arrow').addClass('hovered');},
+  function () {$(this).find('.select2-arrow').removeClass('hovered');}
+);
+
 
 //----------------------------------------------------------------------------
 // shortcuts:
