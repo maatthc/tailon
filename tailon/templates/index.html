@@ -11,20 +11,25 @@
   <meta name='viewport' content='width=device-width'>
   <link rel="shortcut icon" href="assets/favicon.ico?v=2" />
 
-  <!-- WEBASSETS CSS -->
-<link rel='stylesheet' href='{{root}}assets/css/normalize.min.css'>
-<link rel='stylesheet' href='{{root}}assets/js/vendor/select2-3.5.0/select2.css'>
-<link rel='stylesheet' href='{{root}}assets/fonts/font-awesome.min.css'>
-<link rel='stylesheet' href='{{root}}assets/css/main.css' title='main'>
-
-  <!-- WEBASSETS CSS -->
+  <link rel='stylesheet' href='{{root}}assets/css/normalize.min.css'>
+  <link rel='stylesheet' href='{{root}}assets/js/vendor/select2-3.5.0/select2.css'>
+  <link rel='stylesheet' href='{{root}}assets/fonts/font-awesome.min.css'>
+  <link rel='stylesheet' href='{{root}}assets/css/main.css' title='main'>
 
   <!--[if lt IE 9]>
   <script src='//html5shiv.googlecode.com/svn/trunk/html5.js'></script>
   <script>window.html5 || document.write('<script src="{{root}}assets/js/vendor/html5shiv.js"><\/script>')</script>
   <![endif]-->
+<script type='text/javascript'>
+function setDefaultLog(){
+	var firstLog = document.getElementById('logselect').value;
+	document.getElementById('logselect').value = "";
+	console.log("Setting Log to " + firstLog);
+	document.getElementById('logselect').value = firstLog;
+}
+</script>
 </head>
-<body>
+<body  onload="setDefaultLog()">
   <div class='quickbar'>
     <div class='button-group hidden'>
       <a class='action-show-toolbar' href='#' title='Show Toolbar'><i class='fa fa-chevron-circle-down'></i></a>
@@ -32,8 +37,8 @@
   </div>
 
   <div class='toolbar'>
-    <div class='toolbar-item' id='logselect'>
-      <select tabindex='1'>
+    <div class='toolbar-item'>
+      <select id='logselect' tabindex='1' autofocus>
         <option data-size='1' data-mtime='1' value=''></option>
         {# ----------------------------------- #}
         {% if files.keys() == {'__ungrouped__'} %}
@@ -54,8 +59,8 @@
       </select>
     </div>
 
-    <div class='toolbar-item' id='modeselect'>
-      <select tabindex='2'>
+    <div class='toolbar-item'>
+      <select id='modeselect' tabindex='2'>
         {% for cmd in commands %}
         <option value='{{cmd}}'>{{cmd.capitalize()}}</option>
         {% end %}
@@ -73,7 +78,7 @@
     <div class='toolbar-item' tabindex='4'>
       <div class='button-group' style='padding-right:5px;'>
         <a class='action-download'      href='#' title='Download File'> <i class='fa fa-download'></i></a>
-<!--        <a class='action-configure'     href='#' title='Configure'>     <i class='fa fa-wrench'></i></a>-->
+        <a class='action-configure'     href='#' title='Configure'>     <i class='fa fa-wrench'></i></a>
         <a class='action-clear-logview' href='#' title='Clear Logview'> <i class='fa fa-eraser'></i></a>
         <a class='action-hide-toolbar'  href='#' title='Hide Toolbar'>  <i class='fa fa-chevron-circle-up'></i></a>
       </div>
@@ -89,19 +94,15 @@
     var relativeRoot = '{{root}}';
   </script>
 
-  <!-- WEBASSETS JS -->
-<script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-<script>window.jQuery || document.write('<script src="{{root}}assets/js/vendor/jquery-2.1.1.min.js"><\/script>')</script>
-<script src='{{root}}assets/js/vendor/underscore-1.6.0.min.js'></script>
-<script src='{{root}}assets/js/vendor/backbone-1.1.2.min.js'></script>
-<script src='{{root}}assets/js/vendor/cookie-1.4.1.min.js'></script>
-<script src='{{root}}assets/js/vendor/jwerty.js'></script>
-<script src='{{root}}assets/js/vendor/moment-2.7.0.min.js'></script>
-<script src='{{root}}assets/js/vendor/select2-3.5.0/select2.min.js'></script>
-<script src='{{root}}assets/js/vendor/sockjs.min.js'></script>
-<script src='{{root}}assets/js/main.js'></script>
-
-  <!-- WEBASSETS JS -->
-
+  <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+  <script>window.jQuery || document.write('<script src="{{root}}assets/js/vendor/jquery-2.1.1.min.js"><\/script>')</script>
+  <script src='{{root}}assets/js/vendor/underscore-1.6.0.min.js'></script>
+  <script src='{{root}}assets/js/vendor/backbone-1.1.2.min.js'></script>
+  <script src='{{root}}assets/js/vendor/cookie-1.4.1.min.js'></script>
+  <script src='{{root}}assets/js/vendor/jwerty.js'></script>
+  <script src='{{root}}assets/js/vendor/moment-2.7.0.min.js'></script>
+  <script src='{{root}}assets/js/vendor/select2-3.5.0/select2.min.js'></script>
+  <script src='{{root}}assets/js/vendor/sockjs.min.js'></script>
+  <script src='{{root}}assets/js/main.js'></script>
 </body>
 </html>
